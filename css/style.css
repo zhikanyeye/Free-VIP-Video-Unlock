@@ -1,0 +1,220 @@
+/* 全局样式 */
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding-bottom: 60px;
+}
+
+.navbar-default {
+    background-color: #3498db;
+    border-color: #2980b9;
+}
+
+.navbar-default .navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #ecf0f1;
+}
+
+/* 视频播放区域 */
+.video-box {
+    background-color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tit-name {
+    margin-bottom: 15px;
+}
+
+.tit-name span {
+    font-size: 16px;
+    color: #666;
+}
+
+.tit-name h1 {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #3498db;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.video-player {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9宽高比 */
+    margin-bottom: 20px;
+}
+
+#player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+.url-box {
+    margin: 20px 0;
+}
+
+.url-text {
+    height: 40px;
+    font-size: 14px;
+}
+
+.btn-play {
+    height: 40px;
+    font-size: 14px;
+    background-color: #3498db;
+    border-color: #2980b9;
+}
+
+.btn-play:hover, .btn-play:focus {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.tit-gg {
+    text-align: center;
+    color: #e74c3c;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* 使用说明 */
+.usage-guide {
+    margin: 20px auto;
+}
+
+.panel-heading {
+    background-color: #3498db !important;
+    color: white !important;
+    border-color: #2980b9 !important;
+}
+
+.panel-heading h4 {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* 平台logo区域 */
+.logo-box {
+    background-color: #fff;
+    padding: 20px 0;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.title-tit {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.title-tit h4 {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.logo-lie {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.logo-lie:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo-lie img {
+    max-height: 40px;
+    margin: 0 auto;
+}
+
+/* 页脚 */
+.footer {
+    margin-top: 40px;
+    color: #666;
+}
+
+.footer hr {
+    border-top: 1px solid #ddd;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 0;
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(52, 152, 219, 0.8);
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    z-index: 99;
+    transition: all 0.3s;
+}
+
+.back-to-top:hover {
+    background: rgba(52, 152, 219, 1);
+}
+
+/* 响应式调整 */
+@media (max-width: 767px) {
+    .video-player {
+        padding-bottom: 75%; /* 移动端适配 */
+    }
+    
+    .url-box .input-group-addon,
+    .url-box .input-group-btn {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .url-box .input-group {
+        display: block;
+    }
+    
+    .url-box .form-control {
+        border-radius: 4px;
+    }
+    
+    .url-box select {
+        width: 100%;
+        border-radius: 4px !important;
+    }
+    
+    .url-box .btn {
+        width: 100%;
+        border-radius: 4px;
+    }
+}
