@@ -1,6 +1,6 @@
 # Free-VIP-Video-Unlock
 
-[![GitHub license](https://img.shields.io/github/license/zhikanyeye/Free-VIP-Video-Unlock?color=brightgreen)](LICENSE)
+[![GitHub license](https://img.shields.io/github/license/zhikanyeye/Free-VIP-Video-Unlock)](LICENSE)
 ![GitHub stars](https://img.shields.io/github/stars/zhikanyeye/Free-VIP-Video-Unlock?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/zhikanyeye/Free-VIP-Video-Unlock?style=social)
 
