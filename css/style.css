@@ -1,220 +1,138 @@
 /* 全局样式 */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --dark-color: #0f172a;
+    --light-color: #f8fafc;
+    --gray-color: #64748b;
+}
+
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    padding-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #f1f5f9;
 }
 
-.navbar-default {
-    background-color: #3498db;
-    border-color: #2980b9;
+/* 导航栏样式 */
+.header {
+    background-color: var(--dark-color);
+    padding: 1rem 0;
 }
 
-.navbar-default .navbar-brand {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 20px;
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-.navbar-default .navbar-brand:hover {
-    color: #ecf0f1;
+.navbar-brand i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
 }
 
-/* 视频播放区域 */
-.video-box {
-    background-color: #fff;
-    padding: 20px 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+/* 主要内容区域 */
+.hero {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 2rem;
 }
 
-.tit-name {
-    margin-bottom: 15px;
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-.tit-name span {
-    font-size: 16px;
-    color: #666;
+.video-form {
+    max-width: 700px;
+    margin: 2rem auto;
 }
 
-.tit-name h1 {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #3498db;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* 使用说明部分 */
+.how-to-use {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* 支持的平台 */
+.supported-platforms {
+    padding: 4rem 0;
+    background-color: #f8fafc;
+}
+
+.platform-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.platform-logo img {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.platform-logo span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+/* 关于部分 */
+.about {
+    padding: 4rem 0;
+    background-color: var(--dark-color);
+    color: white;
+}
+
+/* 视频播放器部分 */
 .video-player {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9宽高比 */
-    margin-bottom: 20px;
+    padding: 2rem 0;
 }
 
-#player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-}
-
-.url-box {
-    margin: 20px 0;
-}
-
-.url-text {
-    height: 40px;
-    font-size: 14px;
-}
-
-.btn-play {
-    height: 40px;
-    font-size: 14px;
-    background-color: #3498db;
-    border-color: #2980b9;
-}
-
-.btn-play:hover, .btn-play:focus {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-.tit-gg {
-    text-align: center;
-    color: #e74c3c;
-    margin: 10px 0;
-    font-size: 14px;
-}
-
-/* 使用说明 */
-.usage-guide {
-    margin: 20px auto;
-}
-
-.panel-heading {
-    background-color: #3498db !important;
-    color: white !important;
-    border-color: #2980b9 !important;
-}
-
-.panel-heading h4 {
-    margin: 0;
-    font-weight: bold;
-}
-
-/* 平台logo区域 */
-.logo-box {
-    background-color: #fff;
-    padding: 20px 0;
-    margin-top: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.title-tit {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-}
-
-.title-tit h4 {
-    color: #3498db;
-    font-weight: bold;
-}
-
-.logo-lie {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #f5f5f5;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.logo-lie:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.logo-lie img {
-    max-height: 40px;
-    margin: 0 auto;
-}
-
-/* 页脚 */
+/* 页脚部分 */
 .footer {
-    margin-top: 40px;
-    color: #666;
+    background-color: var(--dark-color);
+    color: white;
+    padding: 2rem 0;
 }
 
-.footer hr {
-    border-top: 1px solid #ddd;
+.footer a {
+    color: var(--primary-color);
+    text-decoration: none;
 }
 
-.footer-text {
-    text-align: center;
-    font-size: 12px;
-    padding: 10px 0;
+.footer a:hover {
+    text-decoration: underline;
 }
 
-/* 返回顶部按钮 */
-.back-to-top {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(52, 152, 219, 0.8);
-    color: #fff;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
-    z-index: 99;
-    transition: all 0.3s;
-}
-
-.back-to-top:hover {
-    background: rgba(52, 152, 219, 1);
-}
-
-/* 响应式调整 */
-@media (max-width: 767px) {
-    .video-player {
-        padding-bottom: 75%; /* 移动端适配 */
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
     }
     
-    .url-box .input-group-addon,
-    .url-box .input-group-btn {
-        display: block;
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-    .url-box .input-group {
-        display: block;
-    }
-    
-    .url-box .form-control {
-        border-radius: 4px;
-    }
-    
-    .url-box select {
-        width: 100%;
-        border-radius: 4px !important;
-    }
-    
-    .url-box .btn {
-        width: 100%;
-        border-radius: 4px;
+    .platform-logo img {
+        height: 40px;
+        width: 40px;
     }
 }
