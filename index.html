@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>VIP视频在线解析</title>
+    <meta name="keywords" content="会员视频在线解析,vip视频解析" />
+    <meta name="description" content="在线VIP视频解析,支持爱奇艺、腾讯、优酷等多个平台" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">VIP视频在线解析</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 视频播放区域 -->
+    <div class="container-fluid video-box">
+        <div class="container">
+            <div class="tit-name">
+                <span>正在播放:</span>
+                <h1 id="tittext">感谢您使用解析服务,正在为您播放...</h1>
+            </div>
+            <div class="video-player">
+                <iframe id="player" src="about:blank" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>
+            </div>
+
+            <div class="url-box">
+                <div class="input-group">
+                    <input type="text" id="url" class="form-control url-text" placeholder="请粘贴需要解析的视频网址" title="请复制你想要看的视频网址，粘贴到此处点击播放即可！">
+                    <div class="input-group-addon">
+                        <select class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！" id="jk">
+                            <option value="https://jx.xmflv.com/?url=" selected>线路1 - 推荐</option>
+                            <option value="https://mtjiexi.cc:966/?url=">线路2 - 推荐</option>
+                            <option value="https://gayzyjiexi.com/play/?url=">线路3</option>
+                            <option value="https://www.dbjiexi.com:966/jx/?url=">线路4</option>
+                            <option value="https://yutujx.com/?url=">线路5</option>
+                            <option value="https://jiexidanaizi.com/?url=">线路6</option>
+                            <option value="https://jx.973973.xyz/?url=">线路7</option>
+                            <option value="https://jx.xmflv.cc/?url=">线路8</option>
+                            <option value="https://z1.m1907.top/?jx=">线路9</option>
+                        </select>
+                    </div>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary btn-play" title="点击开始解析并开始播放" id="play-btn">解析播放</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tit-gg">
+                <span>视频播放异常请尝试更换线路，可直接复制粘贴视频链接！</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="container usage-guide">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>使用方法：</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            进入各大视频网站，找到想要观看的VIP视频，然后复制链接（<b>浏览器上的视频地址<电脑>，分享里的复制链接<手机></b>），粘贴到视频的输入框，并点击"解析播放"即可！
+                            <br/><br/>
+                            注：如果遇到不能播放的情况，请尝试切换线路
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 平台logo -->
+    <div class="container-fluid logo-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-tit">
+                        <h4>支持以下网站视频</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第一行 -->
+            <div class="row">
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://vip.iqiyi.com/" target="_blank" title="爱奇艺会员">
+                            <img class="img-responsive" src="images/iqiyilogo.png" alt="爱奇艺" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://film.qq.com/" target="_blank" title="腾讯会员中心">
+                            <img class="img-responsive" src="images/qqlogo.png" alt="腾讯视频" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://vip.youku.com/" target="_blank" title="优酷会员中心">
+                            <img class="img-responsive" src="images/youkulogo.png" alt="优酷" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.mgtv.com/vip/" target="_blank" title="芒果会员中心">
+                            <img class="img-responsive" src="images/hunantvlogo.png" alt="芒果TV" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.bilibili.com/" target="_blank" title="哔哩哔哩">
+                            <img class="img-responsive" src="images/bilibili.png" alt="哔哩哔哩" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.acfun.cn/" target="_blank" title="Ac弹幕网">
+                            <img class="img-responsive" src="images/acfun.png" alt="AcFun" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第二行 -->
+            <div class="row">
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://tv.sohu.com/" target="_blank" title="搜狐视频">
+                            <img class="img-responsive" src="images/sohulogo.png" alt="搜狐视频" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://vip.1905.com/" target="_blank" title="1905电影网视频">
+                            <img class="img-responsive" src="images/1905logo.png" alt="1905" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.pptv.com/" target="_blank" title="PPTV聚力">
+                            <img class="img-responsive" src="images/pptv.png" alt="PPTV" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.le.com/" target="_blank" title="乐视视频">
+                            <img class="img-responsive" src="images/letvlogo.png" alt="乐视" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://www.iqiyi.com/" target="_blank" title="爱奇艺">
+                            <img class="img-responsive" src="images/iqiyilogo.png" alt="爱奇艺" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <div class="logo-lie">
+                        <a href="http://v.qq.com/" target="_blank" title="腾讯视频">
+                            <img class="img-responsive" src="images/qqlogo.png" alt="腾讯视频" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <hr/>
+            <div class="footer-text">
+                <p>本站所有接口均来自互联网，仅供学习测试使用，不提供影片存储，也不参与录制、上传</p>
+                <p>如有侵权问题，请及时联系站长处理</p>
+                <p>&copy; 2025 VIP视频在线解析</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="back-to-top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
