@@ -18,7 +18,7 @@ Free-VIP-Video-Unlock 是一个简单易用的在线工具，旨在帮助用户�
 
 ## 🔍 使用方法
 
-1. 访问我们的[在线工具网站](https://zhikanyeye.github.io/Free-VIP-Video-Unlock/)
+1. 访问我们的[在线工具网站](https://vipfree.app.tc/)
 2. 从视频网站复制您想要观看的VIP视频链接
 3. 将链接粘贴到解析框中
 4. 点击"解析"按钮
