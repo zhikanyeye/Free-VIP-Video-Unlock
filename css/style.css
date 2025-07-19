@@ -506,6 +506,25 @@ html {
     color: var(--info-color);
 }
 
+/* PPTV 自定义图标样式 */
+.platform-icon-text {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #FF4500, #FF6A00);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.platform-card:hover .platform-icon-text {
+    transform: scale(1.1);
+}
+
 /* 关于部分 */
 .about {
     padding: 4rem 0;
