@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free VIP Video Unlock - 免费VIP视频解析</title>
+    <meta name="description" content="一款简单易用的在线工具，帮助用户解锁主流视频平台的VIP内容">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DPlayer CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer@1.27.1/dist/DPlayer.min.css">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/logo-large.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="images/logo.svg" alt="Free VIP Video Unlock" class="navbar-logo"> 
+                        Free VIP Video Unlock
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" title="展开导航菜单" aria-label="展开导航菜单">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#"><i class="fas fa-home"></i> 首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#supported-platforms"><i class="fas fa-list"></i> 支持平台</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about"><i class="fas fa-info-circle"></i> 关于我们</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container text-center">
+                <div class="hero-logo mb-4">
+                    <img src="images/logo-large.svg" alt="Free VIP Video Unlock" class="hero-logo-img">
+                </div>
+                <h1>免费VIP视频解析</h1>
+                <p class="lead">智能选择最快解析接口，支持多平台，完全免费</p>
+                
+                <div class="video-form">
+                    <div class="input-group mb-3">
+                        <input type="text" id="videoUrl" class="form-control form-control-lg" 
+                               placeholder="请粘贴需要解析的视频链接..." aria-label="视频链接">
+                        <button class="btn btn-primary btn-lg" type="button" id="parseBtn">
+                            <i class="fas fa-search"></i> 智能解析
+                        </button>
+                    </div>
+                    <div class="form-text text-white mb-3">支持爱奇艺、腾讯视频、优酷、芒果TV等各大平台VIP视频</div>
+                    
+                    <!-- 功能按钮组 -->
+                    <div class="btn-group" role="group" aria-label="功能按钮">
+                        <button type="button" class="btn btn-outline-light" id="speedTestBtn">
+                            <i class="fas fa-tachometer-alt"></i> 详细测速
+                        </button>
+                        <button type="button" class="btn btn-outline-light" id="apiListBtn">
+                            <i class="fas fa-list"></i> 接口列表
+                        </button>
+                        <button type="button" class="btn btn-outline-light" id="helpBtn">
+                            <i class="fas fa-question-circle"></i> 使用帮助
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 实时状态显示 -->
+                <div class="status-info mt-4" id="statusInfo">
+                    <div class="alert alert-info d-inline-block">
+                        <i class="fas fa-info-circle"></i> 
+                        <span id="statusText">准备就绪</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="video-player d-none" id="playerSection">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+                        <div class="card shadow-lg">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0" id="videoTitle">视频标题</h5>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-success me-2" id="apiNameBadge">当前接口</span>
+                                    <button type="button" class="btn-close" id="closePlayer" title="关闭播放器" aria-label="关闭播放器"></button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <!-- DPlayer 容器 -->
+                                <div id="dplayer-container" class="dplayer-container">
+                                    <!-- DPlayer 将在这里初始化 -->
+                                </div>
+                                <!-- 备用 iframe 播放器 -->
+                                <div id="iframe-container" class="ratio ratio-16x9 d-none">
+                                    <iframe id="videoPlayer" src="" allowfullscreen title="视频播放器"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-to-use">
+            <div class="container">
+                <h2 class="text-center mb-5">如何使用</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="step-icon">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                                <h3>第一步</h3>
+                                <p>复制您想要观看的VIP视频链接</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="step-icon">
+                                    <i class="fas fa-paste"></i>
+                                </div>
+                                <h3>第二步</h3>
+                                <p>将链接粘贴到上方的输入框中</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <div class="step-icon">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <h3>第三步</h3>
+                                <p>点击"解析播放"按钮，享受视频内容</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="supported-platforms" id="supported-platforms">
+            <div class="container">
+                <h2 class="text-center mb-5">支持的视频平台</h2>
+                <div class="row g-4">
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.iqiyi.com" target="_blank" rel="noopener" class="platform-link" title="访问爱奇艺官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.iqiyi.com/favicon.ico" alt="爱奇艺" loading="lazy">
+                                </div>
+                                <div class="platform-name">爱奇艺</div>
+                                <div class="platform-desc">iqiyi.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://v.qq.com" target="_blank" rel="noopener" class="platform-link" title="访问腾讯视频官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://v.qq.com/favicon.ico" alt="腾讯视频" loading="lazy">
+                                </div>
+                                <div class="platform-name">腾讯视频</div>
+                                <div class="platform-desc">v.qq.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.youku.com" target="_blank" rel="noopener" class="platform-link" title="访问优酷官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.youku.com/favicon.ico" alt="优酷" loading="lazy">
+                                </div>
+                                <div class="platform-name">优酷</div>
+                                <div class="platform-desc">youku.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.mgtv.com" target="_blank" rel="noopener" class="platform-link" title="访问芒果TV官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.mgtv.com/favicon.ico" alt="芒果TV" loading="lazy">
+                                </div>
+                                <div class="platform-name">芒果TV</div>
+                                <div class="platform-desc">mgtv.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://tv.sohu.com" target="_blank" rel="noopener" class="platform-link" title="访问搜狐视频官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://tv.sohu.com/favicon.ico" alt="搜狐视频" loading="lazy">
+                                </div>
+                                <div class="platform-name">搜狐视频</div>
+                                <div class="platform-desc">tv.sohu.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.bilibili.com" target="_blank" rel="noopener" class="platform-link" title="访问哔哩哔哩官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.bilibili.com/favicon.ico" alt="哔哩哔哩" loading="lazy">
+                                </div>
+                                <div class="platform-name">哔哩哔哩</div>
+                                <div class="platform-desc">bilibili.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.1905.com" target="_blank" rel="noopener" class="platform-link" title="访问1905电影网官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.1905.com/favicon.ico" alt="1905电影网" loading="lazy">
+                                </div>
+                                <div class="platform-name">1905电影网</div>
+                                <div class="platform-desc">1905.com</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="https://www.pptv.com" target="_blank" rel="noopener" class="platform-link" title="访问PPTV官网">
+                            <div class="platform-card">
+                                <div class="platform-logo">
+                                    <img src="https://www.pptv.com/favicon.ico" alt="PPTV" loading="lazy">
+                                </div>
+                                <div class="platform-name">PPTV</div>
+                                <div class="platform-desc">pptv.com</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <p class="platform-note">
+                        <i class="fas fa-info-circle me-2"></i>
+                        点击平台 logo 可以访问对应的官方网站
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2>关于我们</h2>
+                        <p class="lead">
+                            Free-VIP-Video-Unlock 是一个开源项目，旨在为用户提供便捷的视频解析服务。
+                            我们致力于技术研究和创新，让每个人都能享受优质的视频内容。
+                            本工具仅供学习交流使用，请遵守相关法律法规。
+                        </p>
+                        <div class="mt-4">
+                            <a href="https://github.com/zhikanyeye/Free-VIP-Video-Unlock" class="btn btn-outline-light">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>© 2023-2025 Free-VIP-Video-Unlock | <a href="https://github.com/zhikanyeye/Free-VIP-Video-Unlock/blob/main/LICENSE">MIT License</a></p>
+            <p>
+                <small class="text-muted">免责声明：本站不存储任何视频内容，所有内容均从第三方视频网站获取，我们不对内容负责</small>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DPlayer JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <!-- HLS.js for HLS video support -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

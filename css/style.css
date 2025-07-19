@@ -1,0 +1,648 @@
+/* 全局样式 */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --dark-color: #0f172a;
+    --light-color: #f8fafc;
+    --gray-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #f1f5f9;
+    overflow-x: hidden;
+}
+
+/* 响应式字体大小 */
+html {
+    font-size: 16px;
+}
+
+/* 移动端和桌面端媒体查询优化 */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    /* DPlayer 移动端优化 */
+    .dplayer-container {
+        /* 兼容性回退：使用padding-bottom创建16:9比例 */
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 = 9/16 = 0.5625 */
+        aspect-ratio: 16/9; /* 现代浏览器支持 */
+    }
+    
+    .dplayer-container .dplayer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .dplayer-controller .dplayer-icons {
+        padding: 0 10px;
+    }
+    
+    .dplayer-controller .dplayer-icons .dplayer-icon {
+        padding: 5px;
+    }
+    
+    /* 响应式设计增强 */
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .platform-logo img {
+        height: 40px;
+        width: 40px;
+    }
+    
+    .video-form .input-group {
+        flex-direction: column;
+    }
+    
+    .video-form .form-control {
+        border-radius: 8px !important;
+        margin-bottom: 10px;
+    }
+    
+    .video-form .btn {
+        border-radius: 8px !important;
+        width: 100%;
+    }
+    
+    .how-to-use, .supported-platforms, .about {
+        padding: 2rem 0;
+    }
+    
+    .step-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+/* DPlayer 容器样式 */
+.dplayer-container {
+    width: 100%;
+    position: relative;
+    background: #000;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+/* DPlayer 响应式适配 */
+.dplayer {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.dplayer-video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+/* 隐藏状态信息的默认样式 */
+.status-info {
+    display: none;
+}
+
+.status-info.show {
+    display: block;
+}
+
+/* 通知样式增强 */
+.notification {
+    animation: slideIn 0.3s ease-out;
+    word-wrap: break-word;
+    max-width: 350px;
+}
+
+@media (max-width: 480px) {
+    .notification {
+        right: 10px !important;
+        max-width: calc(100vw - 20px);
+        font-size: 0.875rem;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 按钮组样式 - 移动端优化 */
+.btn-group .btn {
+    margin: 2px;
+    border-radius: 25px !important;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 576px) {
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* 兼容性回退：使用margin代替gap */
+        margin: -4px;
+        gap: 8px; /* 现代浏览器支持 */
+    }
+    
+    .btn-group .btn {
+        flex: 1 1 auto;
+        min-width: 100px;
+        margin: 4px; /* 兼容性回退 */
+    }
+    
+    /* 支持gap的浏览器重置margin */
+    @supports (gap: 8px) {
+        .btn-group {
+            margin: 0;
+        }
+        
+        .btn-group .btn {
+            margin: 2px 0;
+        }
+    }
+}
+
+.btn-group .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* 接口状态指示器 */
+.api-status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.api-status.fast {
+    background-color: var(--success-color);
+    box-shadow: 0 0 10px var(--success-color);
+}
+
+.api-status.medium {
+    background-color: var(--warning-color);
+    box-shadow: 0 0 10px var(--warning-color);
+}
+
+.api-status.slow {
+    background-color: var(--error-color);
+    box-shadow: 0 0 10px var(--error-color);
+}
+
+/* 重试容器样式 */
+.retry-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+@media (max-width: 576px) {
+    .retry-container .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .retry-container .btn {
+        width: 100%;
+        margin: 2px 0;
+    }
+}
+
+/* 导航栏样式 - 响应式优化 */
+.header {
+    background-color: var(--dark-color);
+    padding: 0.75rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 1rem 0;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+
+.navbar-brand i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+/* Logo样式 */
+.navbar-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+}
+
+.hero-logo-img {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.3));
+    animation: logoFloat 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-logo-img:hover {
+    transform: scale(1.05) translateY(-5px);
+    filter: drop-shadow(0 8px 30px rgba(37, 99, 235, 0.5));
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 减少动画在移动设备上的性能影响 */
+@media (prefers-reduced-motion: reduce) {
+    .hero-logo-img {
+        animation: none;
+    }
+    
+    .navbar-logo:hover,
+    .hero-logo-img:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-logo-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-logo {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .hero-logo-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* 移动端导航菜单优化 */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 0;
+        text-align: center;
+    }
+}
+
+/* 主要内容区域 - 响应式优化 */
+.hero {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+    }
+}
+
+.hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+}
+
+.video-form {
+    max-width: 700px;
+    margin: 1.5rem auto;
+}
+
+@media (min-width: 768px) {
+    .video-form {
+        margin: 2rem auto;
+    }
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* 使用说明部分 */
+.how-to-use {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* 支持的平台 */
+.supported-platforms {
+    padding: 4rem 0;
+    background-color: #f8fafc;
+}
+
+/* 平台 Logo 卡片样式 */
+.platform-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.platform-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    height: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.platform-card:hover::before {
+    left: 100%;
+}
+
+.platform-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+}
+
+.platform-logo {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-logo img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.platform-card:hover .platform-logo img {
+    transform: scale(1.1);
+}
+
+.platform-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-desc {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    opacity: 0.8;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-note {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.platform-note i {
+    color: var(--info-color);
+}
+
+/* 关于部分 */
+.about {
+    padding: 4rem 0;
+    background-color: var(--dark-color);
+    color: white;
+}
+
+/* 视频播放器部分 */
+.video-player {
+    padding: 2rem 0;
+}
+
+/* 页脚部分 */
+.footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 2rem 0;
+}
+
+.footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero .lead {
+        font-size: 1rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+    }
+    
+    /* 平台卡片移动端优化 */
+    .platform-card {
+        padding: 1rem;
+    }
+    
+    .platform-logo img {
+        height: 36px;
+        width: 36px;
+    }
+    
+    .platform-name {
+        font-size: 0.9rem;
+    }
+    
+    .platform-desc {
+        font-size: 0.75rem;
+    }
+    
+    .platform-note {
+        font-size: 0.8rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px; /* iOS 推荐的最小点击区域 */
+    }
+    
+    .btn-group .btn {
+        min-height: 40px;
+        padding: 8px 16px;
+    }
+    
+    .list-group-item {
+        min-height: 48px;
+        padding: 12px 16px;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .platform-logo img {
+        /* 基础回退 */
+        -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: pixelated;
+    }
+    
+    /* 现代浏览器支持 crisp-edges */
+    @supports (image-rendering: crisp-edges) {
+        .platform-logo img {
+            image-rendering: crisp-edges;
+        }
+    }
+    
+    /* Firefox 专用 */
+    @supports (image-rendering: -moz-crisp-edges) {
+        .platform-logo img {
+            image-rendering: -moz-crisp-edges;
+        }
+    }
+}
+
+/* Safari 特殊优化 */
+@supports (-webkit-touch-callout: none) {
+    .video-form .form-control {
+        font-size: 16px; /* 防止 iOS Safari 缩放 */
+    }
+    
+    .dplayer-container {
+        -webkit-transform: translateZ(0); /* 硬件加速 */
+        transform: translateZ(0);
+    }
+}
+
+/* 横屏模式优化 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .hero {
+        padding: 1rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero .lead {
+        margin-bottom: 1rem;
+    }
+    
+    .video-form {
+        margin: 1rem auto;
+    }
+}
