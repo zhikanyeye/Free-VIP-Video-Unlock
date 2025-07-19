@@ -168,9 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
             videoTitle.textContent = `正在播放: ${platform} 视频`;
             apiNameBadge.textContent = `${bestApi.name} (最佳)`;
             
-            const dplayerSuccess = deviceInfo.isMobile ? 
-                false : 
-                await tryDPlayerFirst(fullVideoUrl, videoInfo);
+            // 尝试使用 DPlayer，失败则使用 iframe
+            const dplayerSuccess = await tryDPlayerFirst(fullVideoUrl, videoInfo);
             
             if (!dplayerSuccess) {
                 fallbackToIframe(videoInfo);
@@ -185,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const responseTime = speedTestResults.find(r => r.index === bestApiIndex)?.responseTime;
             const timeDisplay = responseTime ? ` (${Math.round(responseTime)}ms)` : '';
             
-            showNotification(`视频解析成功！使用最佳接口：${bestApi.name}${timeDisplay}`, 'success');
+            showNotification(`视频解析成功！使用接口：${bestApi.name}${timeDisplay}`, 'success');
             updateStatus(`解析成功，正在播放 ${platform} 视频`, 'success');
             
             addRetryMechanism(url, platform);
@@ -494,22 +493,47 @@ document.addEventListener('DOMContentLoaded', function() {
             container: dplayerContainer,
             video: {
                 url: videoUrl,
-                type: 'auto'
+                type: 'auto',
+                customType: {
+                    'customHls': function (video, player) {
+                        if (window.Hls && Hls.isSupported()) {
+                            const hls = new Hls();
+                            hls.loadSource(video.src);
+                            hls.attachMedia(video);
+                        }
+                    }
+                }
             },
-            autoplay: !deviceInfo.isMobile,
+            autoplay: false, // 不自动播放，避免错误
             theme: '#2563eb',
             loop: false,
             lang: 'zh-cn',
             screenshot: false,
             hotkey: !deviceInfo.isMobile,
-            preload: deviceInfo.isMobile ? 'metadata' : 'auto',
+            preload: 'metadata', // 只预加载元数据
             volume: 0.8,
-            mutex: true
+            mutex: true,
+            contextmenu: [
+                {
+                    text: '视频解析工具',
+                    link: window.location.href
+                }
+            ]
         };
         
         try {
             dplayer = new DPlayer(dplayerConfig);
             bindDPlayerEvents(videoInfo);
+            
+            // 添加额外的错误检测
+            setTimeout(() => {
+                if (dplayer && dplayer.video && dplayer.video.error) {
+                    console.warn('DPlayer 视频加载错误，切换到备用播放器');
+                    fallbackToIframe(videoInfo);
+                    return false;
+                }
+            }, 3000);
+            
             return true;
         } catch (error) {
             console.error('DPlayer 初始化失败:', error);
@@ -545,6 +569,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
             
+            // 检测是否为直接视频流URL
+            const isDirectVideo = /\.(mp4|m3u8|flv|avi|mkv|webm)(\?.*)?$/i.test(videoUrl);
+            
+            if (!isDirectVideo) {
+                // 如果不是直接视频流，尝试提取或直接使用iframe
+                console.log('检测到解析页面URL，优先使用iframe播放器');
+                return false;
+            }
+            
             return initializeDPlayer(videoUrl, videoInfo);
         } catch (error) {
             console.error('DPlayer 尝试失败:', error);
@@ -557,7 +590,8 @@ document.addEventListener('DOMContentLoaded', function() {
         dplayerContainer.style.display = 'none';
         iframeContainer.classList.remove('d-none');
         videoPlayer.src = videoInfo.fullUrl;
-        updateStatus('已切换到备用播放器', 'info');
+        updateStatus('使用网页播放器播放视频', 'info');
+        showNotification('已启用网页播放器，兼容性更好', 'info');
     }
 
     // 关闭播放器
