@@ -9,6 +9,28 @@
     --warning-color: #f59e0b;
     --error-color: #ef4444;
     --info-color: #3b82f6;
+    
+    /* 主题色彩变量 */
+    --bg-color: #f1f5f9;
+    --text-color: #0f172a;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --hero-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --navbar-text: #374151;
+}
+
+/* 黑暗模式变量 */
+[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --text-color: #f1f5f9;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --hero-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --navbar-bg: rgba(30, 41, 59, 0.95);
+    --navbar-text: #f1f5f9;
+    --dark-color: #f1f5f9;
+    --light-color: #1e293b;
 }
 
 * {
@@ -18,9 +40,10 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--dark-color);
-    background-color: #f1f5f9;
+    color: var(--text-color);
+    background-color: var(--bg-color);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 响应式字体大小 */
@@ -664,4 +687,148 @@ html {
     .video-form {
         margin: 1rem auto;
     }
+}
+
+/* 黑暗模式样式 */
+/* 主题切换按钮 */
+#themeToggle {
+    border: none !important;
+    background: transparent !important;
+    color: var(--navbar-text) !important;
+    padding: 0.5rem !important;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+#themeToggle:hover {
+    color: var(--primary-color) !important;
+    transform: scale(1.1);
+}
+
+/* 黑暗模式下的卡片样式 */
+[data-theme="dark"] .card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的导航栏 */
+[data-theme="dark"] .navbar {
+    background-color: var(--navbar-bg) !important;
+}
+
+[data-theme="dark"] .navbar-brand,
+[data-theme="dark"] .nav-link {
+    color: var(--navbar-text) !important;
+}
+
+/* 黑暗模式下的英雄区域 */
+[data-theme="dark"] .hero {
+    background: var(--hero-bg);
+}
+
+/* 黑暗模式下的表单控件 */
+[data-theme="dark"] .form-control {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .form-control:focus {
+    background-color: var(--card-bg);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+/* 黑暗模式下的按钮 */
+[data-theme="dark"] .btn-outline-light {
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline-light:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 黑暗模式下的模态框 */
+[data-theme="dark"] .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-footer {
+    border-top-color: var(--border-color);
+}
+
+/* 黑暗模式下的表格 */
+[data-theme="dark"] .table {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .table-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的通知 */
+[data-theme="dark"] .notification {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* 黑暗模式下的平台卡片 */
+[data-theme="dark"] .platform-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .platform-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+/* 历史记录相关样式 */
+.history-item {
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    background-color: var(--light-color);
+    transform: translateX(5px);
+}
+
+[data-theme="dark"] .history-item:hover {
+    background-color: var(--border-color);
+}
+
+.history-date {
+    font-size: 0.875rem;
+    color: var(--gray-color);
+}
+
+.history-platform {
+    font-weight: 600;
+}
+
+.history-url {
+    font-size: 0.875rem;
+    color: var(--gray-color);
+    word-break: break-all;
+}
+
+/* 清空历史按钮动画 */
+.clear-history-btn {
+    transition: all 0.3s ease;
+}
+
+.clear-history-btn:hover {
+    transform: scale(1.05);
 }

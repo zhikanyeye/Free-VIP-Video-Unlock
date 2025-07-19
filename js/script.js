@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const closePlayer = document.getElementById('closePlayer');
     const speedTestBtn = document.getElementById('speedTestBtn');
     const apiListBtn = document.getElementById('apiListBtn');
+    const historyBtn = document.getElementById('historyBtn');
     const helpBtn = document.getElementById('helpBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
     const statusInfo = document.getElementById('statusInfo');
     const statusText = document.getElementById('statusText');
     const apiNameBadge = document.getElementById('apiNameBadge');
@@ -72,7 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let bestApiIndex = 0;
     let isSpeedTesting = false;
 
-    // 初始化设备优化
+    // 历史记录和主题相关
+    let videoHistory = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    const maxHistoryItems = 50; // 最大历史记录数量
+
+    // 初始化主题和设备优化
+    initializeTheme();
     initializeDeviceOptimizations();
 
     // 事件监听器
@@ -85,9 +93,144 @@ document.addEventListener('DOMContentLoaded', function() {
     closePlayer.addEventListener('click', closeVideoPlayer);
     speedTestBtn.addEventListener('click', performSpeedTestManual);
     apiListBtn.addEventListener('click', showApiList);
+    historyBtn.addEventListener('click', showVideoHistory);
+    themeToggle.addEventListener('click', toggleTheme);
     helpBtn.addEventListener('click', showHelpModal);
 
     // 主要功能函数
+
+    // 主题切换功能
+    function initializeTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        showNotification(`已切换到${newTheme === 'dark' ? '黑暗' : '明亮'}模式`, 'success');
+    }
+
+    function updateThemeIcon(theme) {
+        const icon = themeIcon;
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun';
+            themeToggle.title = '切换到明亮模式';
+        } else {
+            icon.className = 'fas fa-moon';
+            themeToggle.title = '切换到黑暗模式';
+        }
+    }
+
+    // 历史记录功能
+    function addToHistory(videoInfo) {
+        const historyItem = {
+            id: Date.now(),
+            url: videoInfo.originalUrl,
+            platform: videoInfo.platform,
+            apiName: videoInfo.apiName,
+            timestamp: new Date().toISOString(),
+            title: `${videoInfo.platform} 视频`
+        };
+
+        // 检查是否已存在相同的URL
+        const existingIndex = videoHistory.findIndex(item => item.url === historyItem.url);
+        if (existingIndex !== -1) {
+            videoHistory.splice(existingIndex, 1);
+        }
+
+        // 添加到历史记录开头
+        videoHistory.unshift(historyItem);
+
+        // 限制历史记录数量
+        if (videoHistory.length > maxHistoryItems) {
+            videoHistory = videoHistory.slice(0, maxHistoryItems);
+        }
+
+        // 保存到本地存储
+        localStorage.setItem('videoHistory', JSON.stringify(videoHistory));
+    }
+
+    function showVideoHistory() {
+        const modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.innerHTML = `
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-history"></i> 解析历史记录
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        ${videoHistory.length === 0 ? 
+                            '<div class="text-center py-4"><i class="fas fa-inbox fa-3x text-muted mb-3"></i><p class="text-muted">暂无解析历史记录</p></div>' :
+                            `<div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">共 ${videoHistory.length} 条记录</small>
+                                <button type="button" class="btn btn-outline-danger btn-sm clear-history-btn" onclick="clearVideoHistory()">
+                                    <i class="fas fa-trash"></i> 清空记录
+                                </button>
+                            </div>
+                            <div class="list-group">
+                                ${videoHistory.map(item => `
+                                    <div class="list-group-item history-item" style="cursor: pointer;" onclick="useHistoryItem('${item.url}', '${item.platform}')">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <span class="badge bg-primary history-platform me-2">${item.platform}</span>
+                                                    <span class="badge bg-secondary me-2">${item.apiName}</span>
+                                                    <small class="history-date">${formatDate(item.timestamp)}</small>
+                                                </div>
+                                                <div class="history-url small">${item.url}</div>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); removeHistoryItem(${item.id})">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>`
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+        
+        modal.addEventListener('hidden.bs.modal', function () {
+            document.body.removeChild(modal);
+        });
+    }
+
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) {
+            return '今天 ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+        } else if (diffDays === 2) {
+            return '昨天 ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+        } else if (diffDays <= 7) {
+            return `${diffDays-1}天前`;
+        } else {
+            return date.toLocaleDateString('zh-CN');
+        }
+    }
 
     // 设备优化初始化
     function initializeDeviceOptimizations() {
@@ -186,6 +329,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showNotification(`视频解析成功！使用接口：${bestApi.name}${timeDisplay}`, 'success');
             updateStatus(`解析成功，正在播放 ${platform} 视频`, 'success');
+            
+            // 添加到历史记录
+            addToHistory(videoInfo);
             
             addRetryMechanism(url, platform);
             
@@ -964,6 +1110,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.showApiList = showApiList;
     window.performSpeedTestManualAgain = performSpeedTestManual;
+
+    // 历史记录全局函数
+    window.useHistoryItem = function(url, platform) {
+        videoUrlInput.value = url;
+        showNotification(`已加载历史记录：${platform} 视频`, 'info');
+        // 关闭历史记录模态框
+        const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+        if (modal) {
+            modal.hide();
+        }
+        // 滚动到输入框
+        videoUrlInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        videoUrlInput.focus();
+    };
+
+    window.removeHistoryItem = function(id) {
+        const index = videoHistory.findIndex(item => item.id === id);
+        if (index !== -1) {
+            videoHistory.splice(index, 1);
+            localStorage.setItem('videoHistory', JSON.stringify(videoHistory));
+            showNotification('已删除历史记录', 'success');
+            // 刷新历史记录模态框
+            const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+            if (modal) {
+                modal.hide();
+                setTimeout(() => showVideoHistory(), 300);
+            }
+        }
+    };
+
+    window.clearVideoHistory = function() {
+        if (confirm('确定要清空所有历史记录吗？此操作不可恢复。')) {
+            videoHistory = [];
+            localStorage.setItem('videoHistory', JSON.stringify(videoHistory));
+            showNotification('历史记录已清空', 'success');
+            // 刷新历史记录模态框
+            const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+            if (modal) {
+                modal.hide();
+                setTimeout(() => showVideoHistory(), 300);
+            }
+        }
+    };
 
     // 初始化检查剪贴板
     function checkClipboard() {
