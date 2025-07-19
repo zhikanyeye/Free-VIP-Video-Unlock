@@ -16,8 +16,8 @@
     --card-bg: #ffffff;
     --border-color: #e2e8f0;
     --hero-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --navbar-bg: rgba(255, 255, 255, 0.95);
-    --navbar-text: #374151;
+    --navbar-bg: rgba(255, 255, 255, 0.98);
+    --navbar-text: #0f172a;
 }
 
 /* 黑暗模式变量 */
@@ -27,7 +27,7 @@
     --card-bg: #1e293b;
     --border-color: #334155;
     --hero-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    --navbar-bg: rgba(30, 41, 59, 0.95);
+    --navbar-bg: rgba(30, 41, 59, 0.98);
     --navbar-text: #f1f5f9;
     --dark-color: #f1f5f9;
     --light-color: #1e293b;
@@ -274,6 +274,7 @@ html {
 .navbar-brand {
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--navbar-text) !important;
 }
 
 @media (min-width: 768px) {
@@ -362,6 +363,16 @@ html {
     }
 }
 
+/* 导航链接样式 */
+.navbar-nav .nav-link {
+    color: var(--navbar-text) !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
 /* 移动端导航菜单优化 */
 @media (max-width: 991px) {
     .navbar-collapse {
@@ -373,6 +384,7 @@ html {
     .navbar-nav .nav-link {
         padding: 0.75rem 0;
         text-align: center;
+        color: var(--navbar-text) !important;
     }
 }
 
@@ -505,7 +517,7 @@ html {
 .platform-name {
     font-weight: 600;
     font-size: 1rem;
-    color: var(--dark-color);
+    color: var(--text-color);
     margin-bottom: 0.5rem;
     position: relative;
     z-index: 1;
@@ -849,13 +861,37 @@ html {
 
 /* 黑暗模式下的关于我们和页脚 */
 [data-theme="dark"] .about {
-    background-color: var(--dark-color);
+    background-color: var(--card-bg);
     color: var(--text-color);
 }
 
 [data-theme="dark"] .footer {
-    background-color: var(--dark-color);
+    background-color: var(--card-bg);
     color: var(--text-color);
+}
+
+[data-theme="dark"] .footer .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的关于我们区域的所有文本 */
+[data-theme="dark"] .about * {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .about .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的底部区域的所有文本 */
+[data-theme="dark"] .footer * {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .footer a {
+    color: var(--primary-color) !important;
 }
 
 [data-theme="dark"] .footer .text-muted {
