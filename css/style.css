@@ -248,9 +248,9 @@ html {
 .retry-container {
     margin-top: 1rem;
     padding: 1rem;
-    background-color: #f8f9fa;
+    background-color: var(--card-bg);
     border-radius: 8px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
 }
 
 @media (max-width: 576px) {
@@ -267,7 +267,7 @@ html {
 
 /* 导航栏样式 - 响应式优化 */
 .header {
-    background-color: var(--dark-color);
+    background-color: var(--navbar-bg);
     padding: 0.75rem 0;
 }
 
@@ -439,7 +439,7 @@ html {
 /* 支持的平台 */
 .supported-platforms {
     padding: 4rem 0;
-    background-color: #f8fafc;
+    background-color: var(--bg-color);
 }
 
 /* 平台 Logo 卡片样式 */
@@ -551,8 +551,9 @@ html {
 /* 关于部分 */
 .about {
     padding: 4rem 0;
-    background-color: var(--dark-color);
-    color: white;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
 }
 
 /* 视频播放器部分 */
@@ -562,9 +563,10 @@ html {
 
 /* 页脚部分 */
 .footer {
-    background-color: var(--dark-color);
-    color: white;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer a {
@@ -574,6 +576,11 @@ html {
 
 .footer a:hover {
     text-decoration: underline;
+    color: var(--primary-color);
+}
+
+.footer .text-muted {
+    color: var(--gray-color) !important;
 }
 
 @media (max-width: 576px) {
@@ -831,4 +838,99 @@ html {
 
 .clear-history-btn:hover {
     transform: scale(1.05);
+}
+
+/* 黑暗模式下的文本和字体优化 */
+[data-theme="dark"] {
+    /* 提高文本对比度 */
+    --text-color: #f8fafc;
+    --gray-color: #94a3b8;
+}
+
+/* 黑暗模式下的关于我们和页脚 */
+[data-theme="dark"] .about {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .footer {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .footer .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的lead文本 */
+[data-theme="dark"] .lead {
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* 黑暗模式下的按钮文本 */
+[data-theme="dark"] .btn-outline-light {
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+[data-theme="dark"] .btn-outline-light:hover {
+    background-color: var(--text-color);
+    color: var(--dark-color);
+    border-color: var(--text-color);
+}
+
+/* 黑暗模式下的小文本 */
+[data-theme="dark"] small {
+    color: var(--gray-color);
+}
+
+/* 黑暗模式下的标题 */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的段落文本 */
+[data-theme="dark"] p {
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* 黑暗模式下的列表文本 */
+[data-theme="dark"] li {
+    color: var(--text-color);
+}
+
+/* 主题切换按钮样式 */
+#themeToggle {
+    background: none !important;
+    border: none !important;
+    color: var(--navbar-text) !important;
+    padding: 0.5rem !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+}
+
+#themeToggle:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] #themeToggle:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+#themeIcon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+#themeToggle:hover #themeIcon {
+    transform: rotate(20deg);
 }
