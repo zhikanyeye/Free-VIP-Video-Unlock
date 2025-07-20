@@ -75,10 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             name: "小蚂蚁解析2",
             url: "https://jx.xmflv.cc/?url="
-        },
-        {
-            name: "M1907解析",
-            url: "https://z1.m1907.top/?jx="
         }
     ];
 
