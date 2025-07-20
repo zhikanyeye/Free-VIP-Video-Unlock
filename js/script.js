@@ -49,8 +49,20 @@ document.addEventListener('DOMContentLoaded', function() {
             url: "https://yutujx.com/?url="
         },
         {
-            name: "大奶子解析",
-            url: "https://jiexidanaizi.com/?url="
+            name: "1907解析",
+            url: "https://z1.im1907.top/?jx="
+        },
+        {
+            name: "全民解析",
+            url: "https://api.quanminjiexi.com/index.php?url="
+        },
+        {
+            name: "爱你解析",
+            url: "https://video.isyour.love/player/getplayer?url="
+        },
+        {
+            name: "夜幕解析",
+            url: "https://www.yemu.xyz/?url="
         },
         {
             name: "973解析",
