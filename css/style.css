@@ -95,6 +95,9 @@ html {
     
     .video-form .input-group {
         flex-direction: column;
+        width: 100%;
+        align-items: center; /* 居中对齐子元素 */
+        justify-content: center; /* 垂直方向也居中 */
     }
     
     .video-form .form-control {
@@ -102,6 +105,8 @@ html {
         margin-bottom: 10px;
         min-height: 50px; /* 增加输入框高度 */
         font-size: 16px; /* 防止iOS缩放 */
+        width: 100% !important; /* 确保输入框完全占满父容器 */
+        max-width: 100%;
     }
     
     .video-form .btn {
@@ -109,6 +114,7 @@ html {
         width: 100%;
         min-height: 50px; /* 增加按钮高度 */
         font-size: 16px;
+        max-width: 100%;
     }
     
     .how-to-use, .supported-platforms, .about {
@@ -124,6 +130,23 @@ html {
 @media (max-width: 480px) {
     html {
         font-size: 13px;
+    }
+    
+    /* 确保极小屏幕上的输入框完全自适应 */
+    .video-form {
+        padding: 0 0.5rem;
+        width: 100%;
+    }
+    
+    .video-form .input-group {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .video-form .form-control {
+        width: 100% !important;
+        min-width: 0;
+        flex: 1;
     }
 }
 
@@ -184,6 +207,10 @@ html {
 }
 
 /* 按钮组样式 - 移动端优化 */
+.btn-group {
+    justify-content: center; /* 确保按钮组在所有设备上都居中 */
+}
+
 .btn-group .btn {
     margin: 2px;
     border-radius: 25px !important;
@@ -409,23 +436,6 @@ html {
         text-align: center;
         color: var(--navbar-text) !important;
     }
-    
-    /* 手机端主题切换按钮居中显示 */
-    .navbar-nav {
-        align-items: center;
-    }
-    
-    #themeToggle {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        border-radius: 50% !important;
-        width: 45px !important;
-        height: 45px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
 }
 
 /* 主要内容区域 - 响应式优化 */
@@ -459,12 +469,60 @@ html {
     max-width: 700px;
     margin: 1.5rem auto;
     padding: 0 1rem; /* 手机端添加左右内边距 */
+    width: 100%; /* 确保表单容器占满父容器 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 垂直居中所有子元素 */
+}
+
+/* 确保所有表单子元素居中 */
+.video-form .input-group,
+.video-form .btn-group,
+.video-form .form-text {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
 }
 
 @media (min-width: 768px) {
     .video-form {
         margin: 2rem auto;
         padding: 0; /* 桌面端移除内边距 */
+    }
+}
+
+/* 输入组响应式优化 */
+.video-form .input-group {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center; /* 桌面端水平居中 */
+    align-items: stretch; /* 确保子元素高度一致 */
+}
+
+.video-form .form-control {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* 桌面端输入组布局优化 */
+@media (min-width: 769px) {
+    .video-form .input-group {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    
+    .video-form .form-control {
+        flex: 1;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        margin-bottom: 0;
+    }
+    
+    .video-form .btn {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        width: auto;
     }
 }
 
@@ -1104,52 +1162,86 @@ html {
     color: var(--text-color);
 }
 
-/* 主题切换按钮样式 */
-#themeToggle {
-    background: none !important;
-    border: none !important;
-    color: var(--navbar-text) !important;
-    padding: 0.5rem !important;
-    border-radius: 50% !important;
-    transition: all 0.3s ease !important;
+/* 固定定位的主题切换按钮样式 */
+.theme-toggle-fixed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050; /* 确保在最顶层 */
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-#themeToggle:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+.theme-toggle-fixed:hover {
     transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme="dark"] #themeToggle:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+.theme-toggle-fixed:active {
+    transform: scale(0.95);
+}
+
+/* 黑暗模式下的固定主题切换按钮 */
+[data-theme="dark"] .theme-toggle-fixed {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--text-color);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .theme-toggle-fixed:hover {
+    background: rgba(30, 41, 59, 0.9);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.1);
 }
 
 #themeIcon {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     transition: transform 0.3s ease;
 }
 
-#themeToggle:hover #themeIcon {
+.theme-toggle-fixed:hover #themeIcon {
     transform: rotate(20deg);
 }
 
-/* 手机端主题切换按钮特殊优化 */
-@media (max-width: 991px) {
-    [data-theme="dark"] #themeToggle {
-        background-color: rgba(255, 255, 255, 0.15) !important;
-        color: var(--navbar-text) !important;
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .theme-toggle-fixed {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
     }
     
-    [data-theme="dark"] #themeToggle:hover {
-        background-color: rgba(255, 255, 255, 0.25) !important;
+    #themeIcon {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-toggle-fixed {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
     
-    /* 明亮模式下的手机端按钮 */
-    #themeToggle {
-        background-color: rgba(0, 0, 0, 0.1) !important;
-        color: var(--navbar-text) !important;
-    }
-    
-    #themeToggle:hover {
-        background-color: rgba(0, 0, 0, 0.2) !important;
+    #themeIcon {
+        font-size: 1rem;
     }
 }
