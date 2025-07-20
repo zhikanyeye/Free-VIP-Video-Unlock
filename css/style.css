@@ -251,6 +251,22 @@ html {
     box-shadow: 0 0 10px var(--error-color);
 }
 
+/* 黑暗模式下的API状态指示器增强 */
+[data-theme="dark"] .api-status.fast {
+    background-color: var(--success-color);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+}
+
+[data-theme="dark"] .api-status.medium {
+    background-color: var(--warning-color);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+[data-theme="dark"] .api-status.slow {
+    background-color: var(--error-color);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
 /* 重试容器样式 */
 .retry-container {
     margin-top: 1rem;
@@ -849,6 +865,86 @@ html {
 
 [data-theme="dark"] .modal-footer {
     border-top-color: var(--border-color);
+}
+
+/* 黑暗模式下的列表组样式优化 */
+[data-theme="dark"] .list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+[data-theme="dark"] .list-group-item h6 {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .list-group-item .fw-bold {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .list-group-item small {
+    color: var(--gray-color) !important;
+}
+
+/* 黑暗模式下的徽章样式 */
+[data-theme="dark"] .badge.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .badge.bg-secondary {
+    background-color: var(--gray-color) !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .badge.bg-danger {
+    background-color: var(--error-color) !important;
+    color: white !important;
+}
+
+/* 黑暗模式下的模态框标题和内容 */
+[data-theme="dark"] .modal-title {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-body {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-body .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的按钮关闭样式 */
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* 黑暗模式下的警告和信息文本 */
+[data-theme="dark"] .text-center .text-muted {
+    color: var(--gray-color) !important;
+}
+
+[data-theme="dark"] .text-center i.text-muted {
+    color: var(--gray-color) !important;
 }
 
 /* 黑暗模式下的表格 */
