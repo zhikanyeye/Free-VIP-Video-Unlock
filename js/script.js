@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const speedTestBtn = document.getElementById('speedTestBtn');
     const apiListBtn = document.getElementById('apiListBtn');
     const historyBtn = document.getElementById('historyBtn');
+    const favoritesBtn = document.getElementById('favoritesBtn');
     const helpBtn = document.getElementById('helpBtn');
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiNameBadge = document.getElementById('apiNameBadge');
     const dplayerContainer = document.getElementById('dplayer-container');
     const iframeContainer = document.getElementById('iframe-container');
+    const favoriteBtnPlayer = document.getElementById('favoriteBtnPlayer');
 
     // DPlayer 实例
     let dplayer = null;
@@ -69,12 +71,32 @@ document.addEventListener('DOMContentLoaded', function() {
             url: "https://jx.973973.xyz/?url="
         },
         {
-            name: "小蚂蚁解析1",
+            name: "小蚂蚁解析",
             url: "https://jx.xmflv.com/?url="
         },
         {
-            name: "小蚂蚁解析2",
+            name: "唐僧解析",
             url: "https://jx.xmflv.cc/?url="
+        },
+        {
+            name: "七哥解析",
+            url: "https://jx.nnxv.cn/tv.php?url="
+        },
+        {
+            name: "PlayerJY",
+            url: "https://jx.playerjy.com/?url="
+        },
+        {
+            name: "CK解析",
+            url: "https://www.ckplayer.vip/jiexi/?url="
+        },
+        {
+            name: "八戒解析",
+            url: "https://jx.m3u8.tv/jiexi/?url="
+        },
+        {
+            name: "悟空解析",
+            url: "https://bd.jx.cn/?url="
         }
     ];
 
@@ -85,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 历史记录和主题相关
     let videoHistory = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    let videoFavorites = JSON.parse(localStorage.getItem('videoFavorites')) || [];
     const maxHistoryItems = 50; // 最大历史记录数量
 
     // 初始化主题和设备优化
@@ -102,8 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
     speedTestBtn.addEventListener('click', performSpeedTestManual);
     apiListBtn.addEventListener('click', showApiList);
     historyBtn.addEventListener('click', showVideoHistory);
+    favoritesBtn.addEventListener('click', showVideoFavorites);
     themeToggle.addEventListener('click', toggleTheme);
     helpBtn.addEventListener('click', showHelpModal);
+    favoriteBtnPlayer.addEventListener('click', toggleFavorite);
 
     // 主要功能函数
 
@@ -133,6 +158,106 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             icon.className = 'fas fa-moon';
             themeToggle.title = '切换到黑暗模式';
+        }
+    }
+
+    // 收藏夹功能
+    function showVideoFavorites() {
+        const modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.innerHTML = `
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-star"></i> 我的收藏
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        ${videoFavorites.length === 0 ? 
+                            '<div class="text-center py-4"><i class="fas fa-star-half-alt fa-3x text-muted mb-3"></i><p class="text-muted">暂无收藏</p></div>' :
+                            `<div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">共 ${videoFavorites.length} 条收藏</small>
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearVideoFavorites()">
+                                    <i class="fas fa-trash"></i> 清空收藏
+                                </button>
+                            </div>
+                            <div class="list-group">
+                                ${videoFavorites.map(item => `
+                                    <div class="list-group-item favorite-item" style="cursor: pointer;" onclick="useFavoriteItem('${item.url}', '${item.platform}')">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <span class="badge bg-warning history-platform me-2">${item.platform}</span>
+                                                    <small class="history-date">${formatDate(item.timestamp)}</small>
+                                                </div>
+                                                <div class="history-url small">${item.url}</div>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="event.stopPropagation(); removeFavoriteItem(${item.id})">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>`
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+        
+        modal.addEventListener('hidden.bs.modal', function () {
+            document.body.removeChild(modal);
+        });
+    }
+
+    function toggleFavorite() {
+        const videoInfo = {
+            id: Date.now(),
+            url: currentVideoUrl,
+            platform: detectPlatform(currentVideoUrl),
+            timestamp: new Date().toISOString(),
+        };
+
+        const existingIndex = videoFavorites.findIndex(item => item.url === videoInfo.url);
+
+        if (existingIndex !== -1) {
+            // 已收藏，则取消收藏
+            videoFavorites.splice(existingIndex, 1);
+            showNotification('已取消收藏', 'info');
+        } else {
+            // 未收藏，则添加收藏
+            videoFavorites.unshift(videoInfo);
+            showNotification('已添加到收藏夹', 'success');
+        }
+
+        localStorage.setItem('videoFavorites', JSON.stringify(videoFavorites));
+        updateFavoriteButton();
+    }
+
+    function updateFavoriteButton() {
+        const isFavorited = videoFavorites.some(item => item.url === currentVideoUrl);
+        const icon = favoriteBtnPlayer.querySelector('i');
+        const text = favoriteBtnPlayer.querySelector('span');
+
+        if (isFavorited) {
+            icon.className = 'fas fa-star';
+            text.textContent = '已收藏';
+            favoriteBtnPlayer.classList.add('active');
+            favoriteBtnPlayer.title = '取消收藏';
+        } else {
+            icon.className = 'far fa-star';
+            text.textContent = '收藏';
+            favoriteBtnPlayer.classList.remove('active');
+            favoriteBtnPlayer.title = '收藏此视频';
         }
     }
 
@@ -340,6 +465,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 添加到历史记录
             addToHistory(videoInfo);
+            
+            // 更新收藏按钮状态
+            currentVideoUrl = url;
+            updateFavoriteButton();
             
             addRetryMechanism(url, platform);
             
@@ -1071,6 +1200,38 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.addEventListener('hidden.bs.modal', function () {
             document.body.removeChild(modal);
         });
+    }
+
+    window.useFavoriteItem = function(url, platform) {
+        videoUrlInput.value = url;
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
+        }
+        parseVideo();
+    }
+
+    window.removeFavoriteItem = function(id) {
+        videoFavorites = videoFavorites.filter(item => item.id !== id);
+        localStorage.setItem('videoFavorites', JSON.stringify(videoFavorites));
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
+            showVideoFavorites();
+        }
+    }
+
+    window.clearVideoFavorites = function() {
+        videoFavorites = [];
+        localStorage.removeItem('videoFavorites');
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
+            showVideoFavorites();
+        }
     }
 
     // 全局函数定义
