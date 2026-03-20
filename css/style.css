@@ -1,0 +1,1247 @@
+/* 全局样式 */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --dark-color: #0f172a;
+    --light-color: #f8fafc;
+    --gray-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+    
+    /* 主题色彩变量 */
+    --bg-color: #f1f5f9;
+    --text-color: #0f172a;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --hero-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --navbar-bg: rgba(255, 255, 255, 0.98);
+    --navbar-text: #0f172a;
+}
+
+/* 黑暗模式变量 */
+[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --text-color: #f1f5f9;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --hero-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --navbar-bg: rgba(30, 41, 59, 0.98);
+    --navbar-text: #f1f5f9;
+    --dark-color: #f1f5f9;
+    --light-color: #1e293b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 响应式字体大小 */
+html {
+    font-size: 16px;
+}
+
+/* 移动端和桌面端媒体查询优化 */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    /* DPlayer 移动端优化 */
+    .dplayer-container {
+        /* 兼容性回退：使用padding-bottom创建16:9比例 */
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 = 9/16 = 0.5625 */
+        aspect-ratio: 16/9; /* 现代浏览器支持 */
+    }
+    
+    .dplayer-container .dplayer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .dplayer-controller .dplayer-icons {
+        padding: 0 10px;
+    }
+    
+    .dplayer-controller .dplayer-icons .dplayer-icon {
+        padding: 5px;
+    }
+    
+    /* 响应式设计增强 */
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .platform-logo img {
+        height: 40px;
+        width: 40px;
+    }
+    
+    .video-form .input-group {
+        flex-direction: column;
+        width: 100%;
+        align-items: center; /* 居中对齐子元素 */
+        justify-content: center; /* 垂直方向也居中 */
+    }
+    
+    .video-form .form-control {
+        border-radius: 8px !important;
+        margin-bottom: 10px;
+        min-height: 50px; /* 增加输入框高度 */
+        font-size: 16px; /* 防止iOS缩放 */
+        width: 100% !important; /* 确保输入框完全占满父容器 */
+        max-width: 100%;
+    }
+    
+    .video-form .btn {
+        border-radius: 8px !important;
+        width: 100%;
+        min-height: 50px; /* 增加按钮高度 */
+        font-size: 16px;
+        max-width: 100%;
+    }
+    
+    .how-to-use, .supported-platforms, .about {
+        padding: 2rem 0;
+    }
+    
+    .step-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+    
+    /* 确保极小屏幕上的输入框完全自适应 */
+    .video-form {
+        padding: 0 0.5rem;
+        width: 100%;
+    }
+    
+    .video-form .input-group {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .video-form .form-control {
+        width: 100% !important;
+        min-width: 0;
+        flex: 1;
+    }
+}
+
+/* DPlayer 容器样式 */
+.dplayer-container {
+    width: 100%;
+    position: relative;
+    background: #000;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+/* DPlayer 响应式适配 */
+.dplayer {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.dplayer-video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+/* 隐藏状态信息的默认样式 */
+.status-info {
+    display: none;
+}
+
+.status-info.show {
+    display: block;
+}
+
+/* 通知样式增强 */
+.notification {
+    animation: slideIn 0.3s ease-out;
+    word-wrap: break-word;
+    max-width: 350px;
+}
+
+@media (max-width: 480px) {
+    .notification {
+        right: 10px !important;
+        max-width: calc(100vw - 20px);
+        font-size: 0.875rem;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 按钮组样式 - 移动端优化 */
+.btn-group {
+    justify-content: center; /* 确保按钮组在所有设备上都居中 */
+}
+
+.btn-group .btn {
+    margin: 2px;
+    border-radius: 25px !important;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 576px) {
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* 兼容性回退：使用margin代替gap */
+        margin: -4px;
+        gap: 8px; /* 现代浏览器支持 */
+    }
+    
+    .btn-group .btn {
+        flex: 1 1 auto;
+        min-width: 100px;
+        margin: 4px; /* 兼容性回退 */
+        min-height: 44px; /* 增加按钮高度 */
+        font-size: 14px; /* 调整字体大小 */
+        padding: 8px 12px; /* 调整内边距 */
+    }
+    
+    /* 支持gap的浏览器重置margin */
+    @supports (gap: 8px) {
+        .btn-group {
+            margin: 0;
+        }
+        
+        .btn-group .btn {
+            margin: 2px 0;
+        }
+    }
+}
+
+.btn-group .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* 接口状态指示器 */
+.api-status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.api-status.fast {
+    background-color: var(--success-color);
+    box-shadow: 0 0 10px var(--success-color);
+}
+
+.api-status.medium {
+    background-color: var(--warning-color);
+    box-shadow: 0 0 10px var(--warning-color);
+}
+
+.api-status.slow {
+    background-color: var(--error-color);
+    box-shadow: 0 0 10px var(--error-color);
+}
+
+/* 黑暗模式下的API状态指示器增强 */
+[data-theme="dark"] .api-status.fast {
+    background-color: var(--success-color);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+}
+
+[data-theme="dark"] .api-status.medium {
+    background-color: var(--warning-color);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+[data-theme="dark"] .api-status.slow {
+    background-color: var(--error-color);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+/* 重试容器样式 */
+.retry-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+@media (max-width: 576px) {
+    .retry-container .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .retry-container .btn {
+        width: 100%;
+        margin: 2px 0;
+    }
+}
+
+/* 导航栏样式 - 响应式优化 */
+.header {
+    background-color: var(--navbar-bg);
+    padding: 0.75rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navbar-text) !important;
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 1rem 0;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+
+.navbar-brand i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+/* Logo样式 */
+.navbar-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+}
+
+.hero-logo-img {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.3));
+    animation: logoFloat 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-logo-img:hover {
+    transform: scale(1.05) translateY(-5px);
+    filter: drop-shadow(0 8px 30px rgba(37, 99, 235, 0.5));
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 减少动画在移动设备上的性能影响 */
+@media (prefers-reduced-motion: reduce) {
+    .hero-logo-img {
+        animation: none;
+    }
+    
+    .navbar-logo:hover,
+    .hero-logo-img:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-logo-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-logo {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .hero-logo-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* 导航链接样式 */
+.navbar-nav .nav-link {
+    color: var(--navbar-text) !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* 移动端导航菜单优化 */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 0;
+        text-align: center;
+        color: var(--navbar-text) !important;
+    }
+}
+
+/* 主要内容区域 - 响应式优化 */
+.hero {
+    background: var(--hero-bg);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+    }
+}
+
+.hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+}
+
+.video-form {
+    max-width: 700px;
+    margin: 1.5rem auto;
+    padding: 0 1rem; /* 手机端添加左右内边距 */
+    width: 100%; /* 确保表单容器占满父容器 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 垂直居中所有子元素 */
+}
+
+/* 确保所有表单子元素居中 */
+.video-form .input-group,
+.video-form .btn-group,
+.video-form .form-text {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .video-form {
+        margin: 2rem auto;
+        padding: 0; /* 桌面端移除内边距 */
+    }
+}
+
+/* 输入组响应式优化 */
+.video-form .input-group {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center; /* 桌面端水平居中 */
+    align-items: stretch; /* 确保子元素高度一致 */
+}
+
+.video-form .form-control {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* 桌面端输入组布局优化 */
+@media (min-width: 769px) {
+    .video-form .input-group {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    
+    .video-form .form-control {
+        flex: 1;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        margin-bottom: 0;
+    }
+    
+    .video-form .btn {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        width: auto;
+    }
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* 使用说明部分 */
+.how-to-use {
+    padding: 4rem 0;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* 支持的平台 */
+.supported-platforms {
+    padding: 4rem 0;
+    background-color: var(--bg-color);
+}
+
+/* 平台 Logo 卡片样式 */
+.platform-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.platform-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    height: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.platform-card:hover::before {
+    left: 100%;
+}
+
+.platform-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+}
+
+.platform-logo {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-logo img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.platform-card:hover .platform-logo img {
+    transform: scale(1.1);
+}
+
+.platform-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-desc {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    opacity: 0.8;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-note {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.platform-note i {
+    color: var(--info-color);
+}
+
+/* PPTV 自定义图标样式 */
+.platform-icon-text {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #FF4500, #FF6A00);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.platform-card:hover .platform-icon-text {
+    transform: scale(1.1);
+}
+
+/* 关于部分 */
+.about {
+    padding: 4rem 0;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+}
+
+/* 视频播放器部分 */
+.video-player {
+    padding: 2rem 0;
+}
+
+/* 页脚部分 */
+.footer {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+.footer .text-muted {
+    color: var(--gray-color) !important;
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero .lead {
+        font-size: 1rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+    }
+    
+    /* 平台卡片移动端优化 */
+    .platform-card {
+        padding: 1rem;
+    }
+    
+    .platform-logo img {
+        height: 36px;
+        width: 36px;
+    }
+    
+    .platform-name {
+        font-size: 0.9rem;
+    }
+    
+    .platform-desc {
+        font-size: 0.75rem;
+    }
+    
+    .platform-note {
+        font-size: 0.8rem;
+    }
+    
+    /* 手机端状态信息优化 */
+    .status-info {
+        padding: 0 1rem;
+    }
+    
+    .status-info .alert {
+        font-size: 14px;
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px; /* iOS 推荐的最小点击区域 */
+    }
+    
+    .btn-group .btn {
+        min-height: 40px;
+        padding: 8px 16px;
+    }
+    
+    .list-group-item {
+        min-height: 48px;
+        padding: 12px 16px;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .platform-logo img {
+        /* 基础回退 */
+        -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: pixelated;
+    }
+    
+    /* 现代浏览器支持 crisp-edges */
+    @supports (image-rendering: crisp-edges) {
+        .platform-logo img {
+            image-rendering: crisp-edges;
+        }
+    }
+    
+    /* Firefox 专用 */
+    @supports (image-rendering: -moz-crisp-edges) {
+        .platform-logo img {
+            image-rendering: -moz-crisp-edges;
+        }
+    }
+}
+
+/* Safari 特殊优化 */
+@supports (-webkit-touch-callout: none) {
+    .video-form .form-control {
+        font-size: 16px; /* 防止 iOS Safari 缩放 */
+    }
+    
+    .dplayer-container {
+        -webkit-transform: translateZ(0); /* 硬件加速 */
+        transform: translateZ(0);
+    }
+}
+
+/* 横屏模式优化 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .hero {
+        padding: 1rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero .lead {
+        margin-bottom: 1rem;
+    }
+    
+    .video-form {
+        margin: 1rem auto;
+    }
+}
+
+/* 黑暗模式样式 */
+/* 黑暗模式下的卡片样式 */
+[data-theme="dark"] .card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的导航栏 */
+[data-theme="dark"] .navbar {
+    background-color: var(--navbar-bg) !important;
+}
+
+[data-theme="dark"] .navbar-brand,
+[data-theme="dark"] .nav-link {
+    color: var(--navbar-text) !important;
+}
+
+/* 手机端黑暗模式导航栏优化 */
+@media (max-width: 991px) {
+    [data-theme="dark"] .navbar-collapse {
+        background-color: rgba(30, 41, 59, 0.95);
+        border-radius: 8px;
+        margin-top: 1rem;
+        padding: 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    [data-theme="dark"] .navbar-nav .nav-link {
+        color: var(--navbar-text) !important;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
+        padding: 0.75rem 0;
+    }
+    
+    [data-theme="dark"] .navbar-nav .nav-link:last-child {
+        border-bottom: none;
+    }
+}
+
+/* 黑暗模式下的英雄区域 */
+[data-theme="dark"] .hero {
+    background: var(--hero-bg);
+}
+
+/* 黑暗模式下的表单控件 */
+[data-theme="dark"] .form-control {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .form-control:focus {
+    background-color: var(--card-bg);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: var(--gray-color);
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的按钮 */
+[data-theme="dark"] .btn-outline-light {
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline-light:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 手机端黑暗模式按钮优化 */
+@media (max-width: 576px) {
+    [data-theme="dark"] .btn-outline-light {
+        background-color: var(--card-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+    
+    [data-theme="dark"] .btn-outline-light:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+}
+
+/* 黑暗模式下的模态框 */
+[data-theme="dark"] .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-footer {
+    border-top-color: var(--border-color);
+}
+
+/* 黑暗模式下的列表组样式优化 */
+[data-theme="dark"] .list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+[data-theme="dark"] .list-group-item h6 {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .list-group-item .fw-bold {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .list-group-item small {
+    color: var(--gray-color) !important;
+}
+
+/* 黑暗模式下的徽章样式 */
+[data-theme="dark"] .badge.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .badge.bg-secondary {
+    background-color: var(--gray-color) !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .badge.bg-danger {
+    background-color: var(--error-color) !important;
+    color: white !important;
+}
+
+/* 黑暗模式下的模态框标题和内容 */
+[data-theme="dark"] .modal-title {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-body {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-body .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的按钮关闭样式 */
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* 黑暗模式下的警告和信息文本 */
+[data-theme="dark"] .text-center .text-muted {
+    color: var(--gray-color) !important;
+}
+
+[data-theme="dark"] .text-center i.text-muted {
+    color: var(--gray-color) !important;
+}
+
+/* 黑暗模式下的表格 */
+[data-theme="dark"] .table {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .table-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的通知 */
+[data-theme="dark"] .notification {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* 黑暗模式下的平台卡片 */
+[data-theme="dark"] .platform-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .platform-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+/* 历史记录相关样式 */
+.history-item {
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    background-color: var(--light-color);
+    transform: translateX(5px);
+}
+
+[data-theme="dark"] .history-item:hover {
+    background-color: var(--border-color);
+}
+
+.history-date {
+    font-size: 0.875rem;
+    color: var(--gray-color);
+}
+
+.history-platform {
+    font-weight: 600;
+}
+
+.history-url {
+    font-size: 0.875rem;
+    color: var(--gray-color);
+    word-break: break-all;
+}
+
+/* 清空历史按钮动画 */
+.clear-history-btn {
+    transition: all 0.3s ease;
+}
+
+.clear-history-btn:hover {
+    transform: scale(1.05);
+}
+
+/* 黑暗模式下的文本和字体优化 */
+[data-theme="dark"] {
+    /* 提高文本对比度 */
+    --text-color: #f8fafc;
+    --gray-color: #94a3b8;
+}
+
+/* 黑暗模式下的关于我们和页脚 */
+[data-theme="dark"] .about {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .footer {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .footer .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的关于我们区域的所有文本 */
+[data-theme="dark"] .about * {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .about .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的底部区域的所有文本 */
+[data-theme="dark"] .footer * {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .footer a {
+    color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .footer .text-muted {
+    color: var(--gray-color) !important;
+    opacity: 0.8;
+}
+
+/* 黑暗模式下的lead文本 */
+[data-theme="dark"] .lead {
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* 黑暗模式下的按钮文本 */
+[data-theme="dark"] .btn-outline-light {
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+[data-theme="dark"] .btn-outline-light:hover {
+    background-color: var(--text-color);
+    color: var(--dark-color);
+    border-color: var(--text-color);
+}
+
+/* 黑暗模式下的小文本 */
+[data-theme="dark"] small {
+    color: var(--gray-color);
+}
+
+/* 黑暗模式下的标题 */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: var(--text-color);
+}
+
+/* 黑暗模式下的段落文本 */
+[data-theme="dark"] p {
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* 黑暗模式下的列表文本 */
+[data-theme="dark"] li {
+    color: var(--text-color);
+}
+
+/* 固定定位的主题切换按钮样式 */
+.theme-toggle-fixed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050; /* 确保在最顶层 */
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle-fixed:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle-fixed:active {
+    transform: scale(0.95);
+}
+
+/* 黑暗模式下的固定主题切换按钮 */
+[data-theme="dark"] .theme-toggle-fixed {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--text-color);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .theme-toggle-fixed:hover {
+    background: rgba(30, 41, 59, 0.9);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.1);
+}
+
+#themeIcon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle-fixed:hover #themeIcon {
+    transform: rotate(20deg);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .theme-toggle-fixed {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    #themeIcon {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-toggle-fixed {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    #themeIcon {
+        font-size: 1rem;
+    }
+}
